@@ -46,24 +46,32 @@ function JSshowExtensionDialog() {
     showModal(["template-extension-file", "template-extension-url"]);
 }
 
+var params = {};
+decodeURIComponent(window.location.href).replace(/[?&]+([^=&]+)=([^&]*)/gi,
+    function(_, key, value) {
+        return params[key] = value;
+    });
+
 var flashVars = {
-    autostart: 'false',
-    extensionDevMode: 'true',
-    server: encodeURIComponent(location.host),
-    cloudToken: '4af4863d-a921-4004-b2cb-e0ad00ee1927',
-    cdnToken: '34f16bc63e8ada7dfd7ec12c715d0c94',
+    autostart: params['autostart'] || 'false',
+    extensionDevMode: params['extensionDevMode'] || 'true',
+	microworldMode: params['microworldMode'] || 'false',
+	offlineMode: params['offlineMode'] || 'false',
+    server: params['server'] || encodeURIComponent(location.host),
+    cloudToken: params['cloudToken'] || '4af4863d-a921-4004-b2cb-e0ad00ee1927',
+    cdnToken: params['cdnToken'] || '34f16bc63e8ada7dfd7ec12c715d0c94',
     urlOverrides: {
-        sitePrefix: "https://scratch.mit.edu/",
-        siteCdnPrefix: "https://cdn.scratch.mit.edu/",
-        assetPrefix: "https://assets.scratch.mit.edu/",
-        assetCdnPrefix: "https://cdn.assets.scratch.mit.edu/",
-        projectPrefix: "https://projects.scratch.mit.edu/",
-        projectCdnPrefix: "https://cdn.projects.scratch.mit.edu/",
-        internalAPI: "internalapi/",
-        siteAPI: "site-api/",
-        staticFiles: "scratchr2/static/"
+        sitePrefix: params['sitePrefix'] || "https://scratch.mit.edu/",
+        siteCdnPrefix: params['siteCdnPrefix'] || "https://cdn.scratch.mit.edu/",
+        assetPrefix: params['assetPrefix'] || "https://assets.scratch.mit.edu/",
+        assetCdnPrefix: params['assetCdnPrefix'] || "https://cdn.assets.scratch.mit.edu/",
+        projectPrefix: params['projectPrefix'] || "https://projects.scratch.mit.edu/",
+        projectCdnPrefix: params['projectCdnPrefix'] || "https://cdn.projects.scratch.mit.edu/",
+        internalAPI: params['internalAPI'] || "internalapi/",
+        siteAPI: params['siteAPI'] || "site-api/",
+        staticFiles: params['staticFiles'] || "scratchr2/static/"
     },
-    inIE: (navigator.userAgent.indexOf('MSIE') > -1)
+    inIE: params['inIE'] || (navigator.userAgent.indexOf('MSIE') > -1)
 };
 
 var params = {
